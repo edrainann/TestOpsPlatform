@@ -1,0 +1,68 @@
+<!-- 按钮触发模态框 -->
+<div class="card-tools">
+    <div class="input-group input-group-sm" style="width: 150px;">
+        <div class="input-group-append">
+            <!-- 按钮触发模态框 -->
+            <button class="btn btn-default" data-toggle="modal" data-target="#myModal">
+                新增
+            </button>
+            <!-- 模态框（Modal） -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+                 aria-labelledby="myModalLabel" aria-hidden="true">
+                {#                <form action="{% url 'sign:add_common_websites' %}" method="post">#}
+                <form action="{{ add_website }}" method="post">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="myModalLabel">
+                                    添加网站
+                                </h4>
+                                <button type="button" class="close" data-dismiss="modal"
+                                        aria-hidden="true">
+                                    &times;
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form role="form">
+                                    <div class="form-group">
+                                        <label for="id_site_name">网站名字</label>
+                                        <input type="text" class="form-control"
+                                               id="id_site_name" name="site_name"
+                                               placeholder="Enter ..." autofocus
+                                               required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="id_site_url">网站地址</label>
+                                        <input type="text" class="form-control"
+                                               id="id_site_url" name="site_url"
+                                               placeholder="Enter ..." required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="id_site_description">网站描述</label>
+                                        <textarea id="id_site_description"
+                                                  name="site_description" type="text"
+                                                  class="form-control" rows="3"
+                                                  placeholder="Enter ..."
+                                        ></textarea>
+                                    </div>
+                                </form>
+
+                            </div>
+                            {% csrf_token %}
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default"
+                                        data-dismiss="modal">关闭
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    提交
+                                </button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div>
+                </form>
+            </div><!-- /.modal -->
+        </div>
+    </div>
+</div>
+<!-- /.按钮触发模态框 -->

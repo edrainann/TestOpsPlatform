@@ -1,0 +1,153 @@
+{% extends 'home/base_home.html' %}
+{% load staticfiles %}
+{% block title %}测试环境部署{% endblock %}
+
+{#{% block css %}#}
+{#    <!-- Select2 -->#}
+{#    <link rel="stylesheet" href="{% static 'admin_lte/plugins/select2/css/select2.min.css' %}">#}
+{#{% endblock %}#}
+
+{% block content_header %}测试环境部署{% endblock %}
+<!-- 内部封装 -->
+{% block content %}
+
+    <!-- Main content -->
+    <section class="content">
+        <!-- container-fluid -->
+        <div class="container-fluid">
+
+            <div class="row">
+                <!-- 左边列 -->
+                <div class="col-md-4">
+
+                    <!-- 卡片主体 -->
+                    <div class="card card-default">
+                        <!-- 卡片头部 -->
+                        <div class="card-header">
+                            <h3 class="card-title">打包部署</h3>
+                        </div><!-- /.卡片头部 -->
+
+                        <!-- 卡片内容 -->
+                        <form role="form" action="{% url 'sign:test_env_deploy_execute' %}" method="post"
+                              id="id_form_test_env_deploy">
+                            <div class="card-body">
+                                {% csrf_token %}
+
+                                <!-- 选择环境 -->
+                                <div class="form-group row">
+                                    <label class="col-sm-5 col-form-label">选择环境：</label>
+                                    <div class="col-sm-7">
+                                        <select class="form-control" name="env_name" id="id_env_name">
+                                            {% for item in env_name_list %}
+                                                <option>{{ item.env_name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div><!-- /.选择环境 -->
+
+                                <!-- 项目名称 -->
+                                <div class="form-group row">
+                                    <label class="col-sm-5 col-form-label">项目名称：</label>
+                                    <div class="col-sm-7">
+                                        <select class="form-control select2" name="project_name"
+                                                id="id_project_name" style="width: 100%;">
+                                            <option disabled="disabled">请选择项目名称</option>
+                                            {% for item in project_name_list %}
+                                                <option>{{ item.project_name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div><!-- /.项目名称 -->
+
+                                <!-- 当前版本号 -->
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control " id="current_version_number"
+                                               name="current_version_number" placeholder="显示当前版本号..." disabled>
+                                    <div class="input-group-prepend">
+                                        <button type="submit" class="btn btn-info btn-flat">查看</button>
+                                    </div>
+                                </div><!-- /.当前版本号 -->
+
+                                <!-- 版本号 -->
+                                <div class="form-group row">
+                                    <label class="col-sm-5 col-form-label" for="id_version_number">版本号：</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control " id="id_version_number"
+                                               name="version_number" placeholder="请输入具体版本号...">
+                                    </div>
+                                </div><!-- /.版本号 -->
+
+                                <!-- 执行操作 -->
+                                <div class="form-group row">
+                                    <label class="col-sm-5 col-form-label">执行操作：</label>
+                                    <div class="col-sm-7">
+                                        <select class="form-control" name="deploy_execute_action"
+                                                id="id_deploy_execute_action_list">
+                                            {% for item in deploy_execute_action_list %}
+                                                <option>{{ item.execute_action }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div><!-- /.执行操作 -->
+
+                            </div>
+
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary float-right"
+                                        id="id_execute_sql_button">执行
+                                </button>
+                            </div>
+
+                        </form><!-- /.卡片内容 -->
+
+
+                    </div><!-- /.卡片主体 -->
+
+                </div><!--/.左边列 -->
+
+                <!-- 右边列 -->
+                <div class="col-md-8">
+
+                    <!-- 卡片主体 -->
+                    <div class="card card-secondary">
+                        <!-- 卡片头部 -->
+                        <div class="card-header">
+                            <h3 class="card-title">执行结果</h3>
+                        </div><!-- /.卡片头部 -->
+
+                        <!-- 显示执行结果 -->
+                        <div class="form-group">
+                            <textarea id="id_test_env_deploy_execute_message"
+                                      name="test_env_deploy_execute_message"
+                                      class="form-control" rows="11"
+                                      placeholder="显示执行结果......" disabled></textarea>
+                        </div><!-- /.显示执行结果 -->
+
+                    </div><!-- /.卡片主体 -->
+
+
+                </div><!-- /.右边列 -->
+
+            </div><!-- /.row -->
+
+        </div><!-- /.container-fluid -->
+
+    </section><!-- /.content -->
+
+
+{% endblock %}
+<!-- /.内部封装 -->
+
+
+<!-- js动态加载块 -->
+{% block js %}
+    <!-- Select2 -->
+    <script src="{% static 'admin_lte/plugins/select2/js/select2.full.min.js' %}"></script>
+
+    <script>
+        $(function () {
+            //Initialize Select2 Elements
+            $('.select2').select2();
+        });
+    </script>
+{% endblock %}

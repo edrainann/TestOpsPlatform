@@ -1,0 +1,201 @@
+{#      通过页面顶端的{% load staticfiles %}加载后，才可以使用static方法；#}
+{% load staticfiles %}
+{#{% load bootstrap3 %}#}
+<!DOCTYPE html>
+<html lang="zh-CN">
+{#<html lang="en">#}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    {#      通过{% block title %}base{% endblock %}，设置了一个动态的页面title块#}
+    <title>{% block title %}{% endblock %}</title>
+
+    <!-- Bootstrap -->
+    {#    通过{% static 'bootstrap-3.3.7-dist/css/bootstrap.min.css' %}将样式文件指向了我们的实际静态文件，下面的js脚本也是同样的道理。#}
+    <link href="{% static 'bootstrap-3.3.7-dist/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    {#    通过{% block css %}{% endblock %}，设置了一个动态的css加载块#}
+    {% block css %}{% endblock %}
+    <link rel="stylesheet" type="text/css" href="{% static 'jq-left-side/css/left-side-menu.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'jq-left-side/font/iconfont.css' %}">
+    <script src="{% static 'js/jquery-3.4.1.js' %}"></script>
+    <script src="{% static 'jq-left-side/js/jquery.min.js' %}"></script>
+    <script src="{% static 'jq-left-side/js/jquery.slimscroll.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'jq-left-side/js/left-side-menu.js' %}"></script>
+
+
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#my-nav"
+                    aria-expanded="false">
+                <span class="sr-only">切换导航条</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">TestOps</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="my-nav">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="{% url 'sign:sign_in' %}">主页</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {#            有了用户状态，就可以根据用户登录与否，展示不同的页面#}
+                {% if request.session.is_login %}
+                    <li><a href="#">当前在线：{{ request.session.user_name }}</a></li>
+                    <li><a href="{% url 'sign:logout' %}">登出</a></li>
+                {% else %}
+                    <li><a href="{% url 'sign:sign_in' %}">登录</a></li>
+                    <li><a href="{% url 'sign:sign_up' %}">注册</a></li>
+                {% endif %}
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<div class="left-side-menu">
+    <div class="lsm-expand-btn">
+        <div class="lsm-mini-btn">
+            <label>
+                <input type="checkbox" checked="checked">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="30"/>
+                    <path class="line--1" d="M0 40h62c18 0 18-20-17 5L31 55"/>
+                    <path class="line--2" d="M0 50h80"/>
+                    <path class="line--3" d="M0 60h62c18 0 18 20-17-5L31 45"/>
+                </svg>
+            </label>
+        </div>
+        <!--        <input type="text"/>-->
+    </div>
+    <div class="lsm-container">
+        <div class="lsm-scroll">
+            <div class="lsm-sidebar">
+                <ul>
+                    <li class="lsm-sidebar-item">
+                        <a href="javascript:;"><i class="my-icon lsm-sidebar-icon icon_1"></i><span>系统设置</span><i
+                                class="my-icon lsm-sidebar-more"></i></a>
+                        <ul>
+                            <li><a href="javascript:;"><span>地爆天星</span></a></li>
+                            <li><a class="active" href="javascript:;"><span>无线月读</span></a></li>
+                            <li><a href="javascript:;"><span>一乐拉面</span></a></li>
+                            <li class="lsm-sidebar-item">
+                                <a href="javascript:;"><i
+                                        class="my-icon lsm-sidebar-icon "></i><span>二级菜单11</span><i
+                                        class="my-icon lsm-sidebar-more"></i></a>
+                                <ul>
+                                    <li><a href="javascript:;"><span>地爆天星</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="lsm-sidebar-item">
+                                <a href="javascript:;"><i
+                                        class="my-icon lsm-sidebar-icon "></i><span>二级菜单22</span><i
+                                        class="my-icon lsm-sidebar-more"></i></a>
+                                <ul>
+                                    <li><a href="javascript:;"><span>血继限界</span></a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="lsm-sidebar-item">
+                        <a href="javascript:;"><i class="my-icon lsm-sidebar-icon icon_2"></i><span>网络设置</span><i
+                                class="my-icon lsm-sidebar-more"></i></a>
+                        <ul>
+                            <li><a href="javascript:;"><span>地爆天星1</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="lsm-sidebar-item">
+                        <a href="javascript:;"><i class="my-icon lsm-sidebar-icon icon_3"></i><span>退出系统</span><i
+                                class="my-icon lsm-sidebar-more"></i></a>
+                        <ul>
+                            <li><a href="javascript:;"><span>火之国2</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="lsm-sidebar-item">
+                        <a href="javascript:;"><i
+                                class="my-icon lsm-sidebar-icon icon-iconset0308"></i><span>购物车管理</span><i
+                                class="my-icon lsm-sidebar-more"></i></a>
+                        <ul>
+                            <li><a href="javascript:;"><span>火之国4</span></a></li>
+                            <li><a href="javascript:;"><span>沙之国4</span></a></li>
+                            <li><a href="javascript:;"><span>火影忍者4</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="lsm-sidebar-item">
+                        <a href="javascript:;"><i
+                                class="my-icon lsm-sidebar-icon icon-chongzhi1"></i><span>支付中心</span><i
+                                class="my-icon lsm-sidebar-more"></i></a>
+                        <ul>
+                            <li><a href="javascript:;"><span>火之国5</span></a></li>
+                            <li><a href="javascript:;"><span>沙之国5</span></a></li>
+                            <li><a href="javascript:;"><span>火影忍者5</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="lsm-sidebar-item">
+                        <a href="javascript:;"><i
+                                class="my-icon lsm-sidebar-icon icon-chongzhi-copy"></i><span>充值中心</span><i
+                                class="my-icon lsm-sidebar-more"></i></a>
+                        <ul>
+                            <li><a href="javascript:;"><span>火之国7</span></a></li>
+                            <li><a href="javascript:;"><span>沙之国7</span></a></li>
+                            <li><a href="javascript:;"><span>火影忍者7</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="lsm-sidebar-item">
+                        <a href="javascript:;"><i
+                                class="my-icon lsm-sidebar-icon icon-users"></i><span>用户管理</span><i
+                                class="my-icon lsm-sidebar-more"></i></a>
+                        <ul>
+                            <li><a href="javascript:;"><span>火之国8</span></a></li>
+                            <li><a href="javascript:;"><span>沙之国8</span></a></li>
+                            <li><a href="javascript:;"><span>火影忍者8</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="lsm-sidebar-item">
+                        <a href="javascript:;"><i class="my-icon lsm-sidebar-icon icon_3"></i><span>订单管理</span><i
+                                class="my-icon lsm-sidebar-more"></i></a>
+                        <ul>
+                            <li><a href="javascript:;"><span>火之国9</span></a></li>
+                            <li><a href="javascript:;"><span>沙之国9</span></a></li>
+                            <li><a href="javascript:;"><span>火影忍者9</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="lsm-sidebar-item">
+                        <a href="javascript:;"><i class="my-icon lsm-sidebar-icon icon_3"></i><span>最后一条</span><i
+                                class="my-icon lsm-sidebar-more"></i></a>
+                        <ul>
+                            <li><a href="javascript:;"><span>火之国</span></a></li>
+                            <li><a href="javascript:;"><span>最后一条子菜单</span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block content %}{% endblock %}
+
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="{% static 'js/jquery-3.4.1.js' %}"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="{% static 'bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
+{% block script %}{% endblock %}
+
+</body>
+</html>

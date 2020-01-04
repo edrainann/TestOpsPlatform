@@ -1,0 +1,3 @@
+.idea
+*.sqlite3
+/test_ops_platform/sign/migrations/

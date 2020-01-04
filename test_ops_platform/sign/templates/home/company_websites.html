@@ -1,0 +1,56 @@
+{% extends 'sign/../home/base_home.html' %}
+{% load staticfiles %}
+{% block title %}公司网站{% endblock %}
+
+
+
+
+<!-- Content Wrapper. Contains page content -->
+<!-- 内部封装 -->
+
+<!-- Content Header (Page header) -->
+{% block content_header %}公司网站{% endblock %}
+<!-- /.content-header -->
+
+{% block content %}
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">上线类：</h3>
+                            <!-- 按钮触发模态框 -->
+                            {% include 'home/base_add_new_website.html' %}
+                            <!-- /.按钮触发模态框 -->
+                        </div>
+                        <!-- /.card-header -->
+
+                        <!-- 网址展示 -->
+                        {% include 'home/base_show_websites_info_hover.html' %}
+                        <!-- /.网址展示 -->
+
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div>
+            <!-- /.row -->
+
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+{% endblock %}
+
+<!-- /.content-wrapper -->
+
+{% block js %}
+    <script type="text/javascript">
+        document.getElementById("id_sidebar_website_collection").classList.add("active");
+        const element = document.getElementById("id_sidebar_company_websites");
+        element.classList.add("active")
+    </script>
+{% endblock %}
+

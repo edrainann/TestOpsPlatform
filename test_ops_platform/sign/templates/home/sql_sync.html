@@ -1,0 +1,126 @@
+{% extends 'sign/../home/base_home.html' %}
+{% load staticfiles %}
+{% block title %}SQL同步{% endblock %}
+
+<!-- js动态加载块 -->
+{% block js_header %}
+    {#<script>#}
+    {#    function test() {#}
+    {#alert("我是行间事件");#}
+    {#${this}.addClass("active");#}
+    {#        var element = document.getElementById("id_sql_sync");#}
+    {#var element = document.getElementsByClassName(".nav-link");#}
+    {#        element.classList.add("active");#}
+    {#    }#}
+    {#</script>#}
+
+
+
+
+{% endblock %}
+
+<!-- Content Wrapper. Contains page content -->
+<!-- 内部封装 -->
+
+<!-- Content Header (Page header) -->
+{% block content_header %}SQL同步{% endblock %}
+<!-- /.content-header -->
+
+{% block is_active %}
+
+{% endblock %}
+
+
+{% block content %}
+
+    <!-- Main content -->
+    <section class="content">
+        <!-- container-fluid -->
+        <div class="container-fluid">
+
+            <div class="row">
+                <!-- 左边列 -->
+                <div class="col-md-6">
+                    <form role="form" action="{% url 'sign:execute_sql_sync' %}" method="post"
+                          id="id_form_execute_sql_sync">
+                        {% csrf_token %}
+                        <!-- 选择环境 -->
+                        <!-- select -->
+                        <div class="form-group" style="width:200px">
+                            <label>选择环境：</label>
+                            <select class="form-control" name="choose_env" id="id_choose_env">
+                                {% for item in sql_sync_env_list %}
+                                    <option>{{ item.sql_sync_env }}</option>
+                                {% endfor %}
+                            </select>
+                        </div><!-- /.选择环境 -->
+
+                        <!-- 输入需要执行的SQL -->
+                        <!-- textarea -->
+                        <div class="form-group">
+                            <label>请输入需要执行的SQL：</label>
+                            <textarea name="execute_sql" class="form-control" rows="8"
+                                      placeholder="Enter ..." id="id_execute_sql"></textarea>
+                        </div><!-- /.输入需要执行的SQL -->
+                        <button type="reset" class="btn btn-default">清空</button>
+                        <button type="submit" class="btn btn-primary float-right" id="id_execute_sql_button">执行
+                        </button>
+                    </form>
+                </div><!--/.左边列 -->
+
+                <!-- 右边列 -->
+                <div class="col-md-6">
+                    <!-- 执行结果 -->
+                    <!-- textarea -->
+                    <div class="form-group">
+                        <label>执行结果：</label>
+                        <textarea id="id_execute_sql_result_message" name="execute_sql_result_message"
+                                  class="form-control" rows="11"
+                                  placeholder="显示执行结果" disabled></textarea>
+                    </div><!-- /.执行结果 -->
+                </div><!-- /.右边列 -->
+            </div><!-- /.row -->
+
+        </div><!-- /.container-fluid -->
+
+    </section><!-- /.content -->
+
+{% endblock %}
+
+{% block js %}
+    {#    ajax异步刷新#}
+    <script type="text/javascript">
+        $(document).ready(function () {               //元素加载完成之后，绑定事件
+            $("#id_execute_sql_button").click(function () {       //给按钮的点击效果，绑定一个事件
+                {#$('#id_form_execute_sql_sync').submit(function () {#}
+                var choose_env = $("#id_choose_env").val();
+                var execute_sql = $("#id_execute_sql").val();
+                $.ajax({                    //调用ajax
+                    type: "POST",
+                    url: "{% url "sign:execute_sql_sync" %}",  //发出请求的地址
+                    data: {
+                        'choose_env': choose_env,
+                        'execute_sql': execute_sql
+                    },
+                    success:
+                        function (result) {
+                            $("#id_execute_sql_result_message").html(result);
+                        }
+                    // 服务器成功响应后，绑定的事件
+                });
+                return false;  //不刷新页面
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        var element = document.getElementById("id_sidebar_sql_sync");
+        element.classList.add("active")
+    </script>
+
+{% endblock %}
+
+
+
+<!-- /.content-wrapper -->
+

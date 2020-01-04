@@ -1,0 +1,25 @@
+<!-- 网址展示，不限制长度滑动 -->
+<div class="card-body table-responsive p-0">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>网站名称</th>
+            <th>网站地址</th>
+            <th>网站描述</th>
+        </tr>
+        </thead>
+        <tbody>
+        {#                                {% for item in common_websites_info %}#}
+        {% for item in websites_list %}
+            <tr>
+                <td>{{ item.site_name }}</td>
+                <td>
+                    <a href="{{ item.site_url }} " target="_blank">{{ item.site_url }}</a>
+                </td>
+                <td>{{ item.site_description }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<!-- /.网址展示，不限制长度滑动 -->

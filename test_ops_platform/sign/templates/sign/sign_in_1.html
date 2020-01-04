@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+</head>
+<body>
+<div style="margin: 10% 40%;">{#    上下外边距10%，左右外边距40%#}
+    <h1>欢迎登录！</h1>
+    <!--&lt;!&ndash; GET 请求 &ndash;&gt;-->
+    <!--<form method="get">-->
+    <!--    <input name="username" type="text" placeholder="usename"><br>-->
+    <!--    <input name="password" type="password" placeholder="password"><br>-->
+    <!--    <button id="btn" type="submit">登陆按钮</button>-->
+    <!--</form>-->
+    <!-- POST 请求 -->
+    <!-- 去除模板中的硬编码 URL,login_action关联test_ops/urls中的name='login_action' -->
+    <!-- 为 URL 名称添加命名空间,在sign.urls中加入app_name = 'sign' -->
+    <form action="{% url 'sign:sign_in' %}" method="post">
+        {% csrf_token %}<br>    <!--添加csrf令牌，可在test_ops/setting下注释掉 'django.middleware.csrf.CsrfViewMiddleware'-->
+        {#    <label for="id_username">用户名：</label><br>#}
+        {#    <input type="text" placeholder="username" id="id_username" name="username" autofocus required><br>#}
+        {{ uf.username.label_tag }}<br>
+        {{ uf.username }}<br>
+        {#    <label for="id_password">密码：</label><br>#}
+        {#    <input type="password" name="password"  placeholder="password" id="id_password" autofocus required><br>#}
+        {{ uf.password.label_tag }}<br>
+        {{ uf.password }}<br>
+        {{ error }}<br>   <!-- sign/views/下 返回｛error｝显示的位置 -->
+        <button id="btn" type="submit">登陆</button>
+    </form>
+    <a href="{% url 'sign:sign_up' %}">注册</a>
+
+</body>
+</html>

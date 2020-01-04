@@ -1,0 +1,68 @@
+{#      通过页面顶端的{% load staticfiles %}加载后，才可以使用static方法；#}
+{% load staticfiles %}
+{#{% load bootstrap3 %}#}
+<!DOCTYPE html>
+<html lang="zh-CN">
+{#<html lang="en">#}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    {#      通过{% block title %}base{% endblock %}，设置了一个动态的页面title块#}
+    <title>{% block title %}{% endblock %}</title>
+
+    <!-- Bootstrap -->
+    {#    通过{% static 'bootstrap-3.3.7-dist/css/bootstrap.min.css' %}将样式文件指向了我们的实际静态文件，下面的js脚本也是同样的道理。#}
+    <link href="{% static 'bootstrap-3.3.7-dist/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    {#    通过{% block css %}{% endblock %}，设置了一个动态的css加载块#}
+    {% block css %}{% endblock %}
+
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#my-nav"
+                    aria-expanded="false">
+                <span class="sr-only">切换导航条</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">TestOps</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="my-nav">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="{% url 'sign:sign_in' %}">主页</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+{#            有了用户状态，就可以根据用户登录与否，展示不同的页面#}
+                {% if request.session.is_login %}
+                    <li><a href="#">当前在线：{{ request.session.user_name }}</a></li>
+                    <li><a href="{% url 'sign:logout' %}">登出</a></li>
+                {% else %}
+                    <li><a href="{% url 'sign:sign_in' %}">登录</a></li>
+                    <li><a href="{% url 'sign:sign_up' %}">注册</a></li>
+                {% endif %}
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+{% block content %}{% endblock %}
+
+{% csrf_token %}
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="{% static 'js/jquery-3.4.1.js' %}"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="{% static 'bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
+{% block js %}{% endblock %}
+
+</body>
+</html>

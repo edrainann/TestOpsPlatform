@@ -1,0 +1,45 @@
+{% extends 'sign/base_sign.html' %}
+{% load staticfiles %}
+{% block title %}注册{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/sign_in.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="col-md-4 col-md-offset-4">
+            {#            <form action="{% url 'sign:sign_up' %}" method='post' enctype="multipart/form-data">#}
+            <form class="form-login" action="{% url 'sign:sign_up' %}" method="post">
+
+                {% if message %}
+                    <div class="alert alert-warning">{{ message }}</div>
+                {% endif %}
+
+                <h2 class="text-center">欢迎注册</h2>
+                {% csrf_token %}
+                {#                {{ user_form.as_p }}#}
+                <div class="form-group">
+                    {{ user_form.username.label_tag }}
+                    {{ user_form.username }}
+                </div>
+                <div class="form-group">
+                    {{ user_form.password.label_tag }}
+                    {{ user_form.password }}
+                </div>
+                <div class="form-group">
+                    {{ user_form.email.label_tag }}
+                    {{ user_form.email }}
+                </div>
+                <div class="form-group">
+                    {{ user_form.captcha.errors }}
+                    {{ user_form.captcha.label_tag }}
+                    {{ user_form.captcha }}
+                </div>
+                <button type="reset" class="btn btn-default pull-left">重置</button>
+                <button type="submit" class="btn btn-primary pull-right">提交</button>
+            </form>
+            <br>
+        </div>
+    </div> <!-- /container -->
+{% endblock %}
+

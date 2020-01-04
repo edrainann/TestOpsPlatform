@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Document</title>
+    <style>
+        .active {
+            color: red
+        }
+    </style>
+</head>
+<body>
+<ul>
+    <li class="active">google</li>
+    <li>apple</li>
+    <li>storm</li>
+</ul>
+
+<script>
+    const ul = document.querySelector('ul');
+            console.log("ul---",ul);
+
+    const li = document.querySelectorAll('li');
+            console.log("li---",li);
+
+
+    ul.onclick = (e) => {
+        console.log("e---",e);
+
+        li.forEach(v => {
+            console.log("v:--",v);
+            v.classList.remove('active');
+        });
+        const bb = e.target;
+        bb.classList.add('active');
+                console.log("bb---",e);
+
+
+    };
+
+</script>
+
+</body>
+</html>
