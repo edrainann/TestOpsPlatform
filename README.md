@@ -1,8 +1,53 @@
 # TestOps
 
+## 项目实现功能
+
+1、注册
+
+![image](https://github.com/edrainann/TestOpsPlatform/raw/master/ReadMe_Photos/sign_up.png)
+
+2、登录
+
+![image](https://github.com/edrainann/TestOpsPlatform/raw/master/ReadMe_Photos/sign_in.png)
+
+3、登录后的主页显示
+
+![image](https://github.com/edrainann/TestOpsPlatform/raw/master/ReadMe_Photos/index.png)
+
+4、网站归纳
+1）公司网站
+
+![image](https://github.com/edrainann/TestOpsPlatform/raw/master/ReadMe_Photos/company_websites_online.png)
+
+2）常用网站
+
+![image](https://github.com/edrainann/TestOpsPlatform/raw/master/ReadMe_Photos/common_websites.png)
+
+3）新增网站
+![image](https://github.com/edrainann/TestOpsPlatform/raw/master/ReadMe_Photos/add_websites.png)
+
+5、项目部署&上线
+
+1）测试环境部署
+![image](https://github.com/edrainann/TestOpsPlatform/raw/master/ReadMe_Photos/test_env_deploy.png)
+
+2）生产环境上线
+
+6、SQL同步
+![image](https://github.com/edrainann/TestOpsPlatform/raw/master/ReadMe_Photos/sql_sync.png)
+
+
+
+
+
+[TOC]
+
+
+
 ## 一、官方文档
 
 Django中文官网: https://docs.djangoproject.com/zh-hans/3.0/
+
 Django英文官网: https://docs.djangoproject.com/en/3.0/
 
 ## 二、初始化
@@ -39,7 +84,7 @@ test_ops/
 
 ### 2、运行项目
 
-`py manage.py runserver 127.0.0.1:8028` 
+`py manage.py runserver 127.0.0.1:8028`
 样就可以运行起来啦 打开网址：http://127.0.0.1:8028/ 进行校验
 
 ### 3、创建应用
@@ -61,7 +106,7 @@ test_ops/
 
 把下面这些 Python 代码输入进去：
 
-```python 
+```python
 from django.http import HttpResponse
 
 
@@ -107,6 +152,8 @@ urlpatterns = [
 
 > 当包括其它 URL 模式时你应该总是使用 `include()` ， `admin.site.urls` 是唯一例外。
 
+
+
 ## 四、通过templates来展示页面
 
 ### 1、在sign文件夹下面，创建`templates`文件夹
@@ -137,7 +184,7 @@ def sign(request):
 
 ### 4、修改`settings.py`文件，新增`'sign',`文字
 
-```python 
+```python
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -158,7 +205,7 @@ INSTALLED_APPS = [
 
 
 
-## 、数据库配置
+## 五、数据库配置
 
 Django 提供完善的模型（model）层主要用来创建和存取数据，不需要我们直接对数据库操作。
 
@@ -227,7 +274,9 @@ DATABASES = {
 运行 python manage.py migrate 来应用数据库迁移。
 ```
 
-## 、认证登录
+
+
+## 六、认证登录
 
 ### 1、创建admin系统用户
 
@@ -235,22 +284,30 @@ DATABASES = {
 
 ### 2、输入用户、密码信息
 
-​```python
->py manage.py createsuperuser
- sername (leave blank to use 'edrain'): admin
- mail address: admin@mail.com
-Password:
- assword (again):
- his password is too short. It must contain at least 8 characters.
- his password is too common.
- ypass password validation and create user anyway? [y/N]: y
- uperuser created successfully.
+```python
+py manage.py createsuperuser
 
+sername (leave blank to use 'edrain'): admin
+
+mail address: admin@mail.com
+
+Password:
+
+assword (again):
+
+his password is too short. It must contain at least 8 characters.
+
+his password is too common.
+
+ypass password validation and create user anyway? [y/N]: y
+
+uperuser created successfully.
 ```
 
 
 
-## 五、开发模式
+
+## 七、开发模式
 
 这段话在Django官方文档也曾出现过：鼓励松耦合以及对应用程序中不同部分的严格分割。
 
@@ -280,7 +337,7 @@ MTV：Model-Template-Views
 
 
 
-## 六、小技巧
+## 八、小技巧
 
 ### 1、去除模板中的硬编码 URL
 
@@ -294,7 +351,7 @@ MTV：Model-Template-Views
 
 替代如下：
 
-`<form action="{%  url 'login_action' %}" method="post">` 
+`<form action="{%  url 'login_action' %}" method="post">`
 
 这个标签的工作方式是在 `sign.urls` 模块的 URL 定义中寻具有指定名字的条目。你可以回忆一下，具有名字 'login_action' 的 URL 是在如下语句中定义的。
 
@@ -313,9 +370,9 @@ path('edrain/login_action/', views.login_action, name='login_action'),
 
 ### 2、为 URL 名称添加命名空间
 
-Django 如何知道 `{% url %}` 标签到底对应哪一个应用的 URL 呢？ 
+Django 如何知道 `{% url %}` 标签到底对应哪一个应用的 URL 呢？
 
-1）在根 URLconf 中添加命名空间。在 `sign/urls.py` 文件中稍作修改，加上 `app_name` 设置命名空间： 
+1）在根 URLconf 中添加命名空间。在 `sign/urls.py` 文件中稍作修改，加上 `app_name` 设置命名空间：
 
 ​```python
 from django.urls import path
@@ -345,7 +402,7 @@ HttpReponseDirect只支持hard coded urls(硬编码链接), 不能直接使用�
 
 在使用URL命名时，我们需要先通过URL反向解析方法reverse先对命名URL(article_list)进行解析，然后再使用HttpReponseRedirect定向(如下面的代码)。背后的逻辑是reverse('blog:article_list')='/index/'。
 
-```python
+​```python
 def login_action(request):
     """执行 登录按钮 操作后的界面"""
     if request.method == 'POST':
@@ -357,7 +414,7 @@ def login_action(request):
 
 链接：https://blog.csdn.net/weixin_42134789/article/details/81505963
 
-## 七、疑问
+## 九、疑问
 
 ### Q1：db.sqlite3是什么？
 
