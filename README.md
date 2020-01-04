@@ -1,0 +1,2 @@
+# TestOpsPlatform
+前端通过Bootstrap框架，借助AdminLte模板实现交互样式；后端通过Python+Django实现参数传递；数据库通过sqlite3，实现数据读取保存。
