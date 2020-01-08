@@ -34,7 +34,7 @@
 
 ![image](https://github.com/edrainann/TestOpsPlatform/raw/master/ReadMe_Photos/test_env_deploy.png)
 
-2）实现打包Log的实时刷新
+2）通过dwebsocket,实现与服务器连接，输入查询指令后，页面的实时滚动
 
 ![image](https://github.com/edrainann/TestOpsPlatform/raw/master/ReadMe_Photos/test_deploy.gif)
 
