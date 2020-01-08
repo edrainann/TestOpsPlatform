@@ -15,6 +15,7 @@
 ![image](https://github.com/edrainann/TestOpsPlatform/raw/master/ReadMe_Photos/index.png)
 
 4、网站归纳
+
 1）公司网站
 
 ![image](https://github.com/edrainann/TestOpsPlatform/raw/master/ReadMe_Photos/company_websites_online.png)
@@ -24,23 +25,25 @@
 ![image](https://github.com/edrainann/TestOpsPlatform/raw/master/ReadMe_Photos/common_websites.png)
 
 3）新增网站
-![image](https://github.com/edrainann/TestOpsPlatform/raw/master/ReadMe_Photos/add_websites.png)
+
+![image](https://github.com/edrainann/TestOpsPlatform/raw/master/ReadMe_Photos/add_new.gif)
 
 5、项目部署&上线
 
 1）测试环境部署
+
 ![image](https://github.com/edrainann/TestOpsPlatform/raw/master/ReadMe_Photos/test_env_deploy.png)
 
-2）生产环境上线
+2）实现打包Log的实时刷新
+
+![image](https://github.com/edrainann/TestOpsPlatform/raw/master/ReadMe_Photos/test_deploy.gif)
 
 6、SQL同步
+
 ![image](https://github.com/edrainann/TestOpsPlatform/raw/master/ReadMe_Photos/sql_sync.png)
 
 
 
-
-
-[TOC]
 
 
 
