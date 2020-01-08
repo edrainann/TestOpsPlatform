@@ -2,10 +2,36 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2020/1/2
 # @Author  : Edrain
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
+from dwebsocket import accept_websocket
 
-from sign.models import EnvironmentName, ProjectName, DeployExecuteAction
+from project_deploy import SSHConnection
+from test_ops_platform.sign.models import EnvironmentName, ProjectName, DeployExecuteAction
+
+
+@accept_websocket
+def echo_once(request):
+    if not request.is_websocket():
+        try:
+            message1 = request.GET['mess1']
+            print("===", message1)
+            return HttpResponse(message1)
+        except:
+            return render(request, 'home/index_1.html', locals())
+    else:  # 判断是不是websocket连接
+        for message in request.websocket:
+            # message = message.decode('utf-8')  # 接收前端发来的数据
+            print("-----", message)
+            seg = str(message).split("###")
+            env_name = seg[0]
+            project_name = seg[1]
+            com = f'cd /home/shell/dev-sh;sh {project_name} version'
+            print(com)
+            command = 'cd /home/shell/dev-sh'  # 这里是要执行的命令或者脚本
+            SSHConnection("Env_10").echo_once_link(request, command)
+            print('end===')
 
 
 def test_env_deploy(request):
@@ -16,24 +42,50 @@ def test_env_deploy(request):
     return render(request, 'home/test_env_deploy.html', locals())
 
 
+@accept_websocket
 def test_env_deploy_check_out_version(request):
     """测试环境打包部署--查看当前版本"""
-    if request.method == "POST":
-        env_name = request.POST.get("env_name", "")
-        project_name = request.POST.get("project_name", "")
-        version_number = request.POST.get("version_number", "")
+    if not request.is_websocket():
+        try:
+            env_name = request.GET['env_name']
+            project_name = request.GET['project_name']
+            return render(request, 'home/test_env_deploy.html', locals())
+        except:
+            return render(request, 'home/test_env_deploy.html', locals())
+    else:
+        for message in request.websocket:
+            try:
+                message = message.decode('utf-8')  # 接收前端发来的数据
+                seg = str(message).split("###")
+                env_name = seg[0]
+                project_name = seg[1]
+                command = f'cd /home/shell/dev-sh;sh {project_name}.sh version'  # 这里是要执行的命令或者脚本
+                SSHConnection(env_name).echo_once_link(request, command)
+            except:
+                return HttpResponseRedirect(reverse('sign:test_env_deploy'))
 
 
+@accept_websocket
 def test_env_deploy_execute(request):
-    """测试环境打包部署--执行"""
-    if request.method == "POST":
-        env_name = request.POST.get("env_name", "")
-        project_name = request.POST.get("project_name", "")
-        version_number = request.POST.get("version_number", "")
-        deploy_execute_action = request.POST.get("deploy_execute_action", "")
-        print(env_name, project_name, version_number, deploy_execute_action)
-        test_env_deploy_execute_message = "...."
-    return HttpResponse(test_env_deploy_execute_message)
+    """测试环境打包部署--update/new执行"""
+    if not request.is_websocket():
+        try:
+            env_name = request.GET['env_name']
+            project_name = request.GET['project_name']
+            return HttpResponse(env_name, project_name)
+        except:
+            return render(request, 'home/test_env_deploy.html', locals())
+    else:
+        for message in request.websocket:
+            message = message.decode('utf-8')  # 接收前端发来的数据
+            print(message)
+            seg = str(message).split("###")
+            env_name = seg[0]
+            project_name = seg[1]
+            version_number = seg[2]
+            deploy_execute_action = seg[3]
+            command = f'cd /home/shell/dev-sh;sh {project_name}.sh {deploy_execute_action} {version_number}'  # 这里是要执行的命令或者脚本
+            SSHConnection(env_name).echo_once_link(request, command)
 
 
 def produce_env_online(request):

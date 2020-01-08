@@ -15,7 +15,6 @@ urlpatterns = [
     path('sign_up/', views.sign_up, name='sign_up'),  # 注册
     path('sign_in/', views.sign_in, name='sign_in'),  # 登录
     path('logout/', views.logout, name='logout'),  # 退出
-    path('index/', views.index, name='index'),  # 退出
     path('base_home/', views.base_home, name='base_home'),  # 退出
     path('common_websites/', views_websites.common_websites, name='common_websites'),  # 常用网站
     path('common_websites/add_common_websites/', views_websites.add_common_websites, name='add_common_websites'),
@@ -24,10 +23,15 @@ urlpatterns = [
          name='add_company_websites_online'),
     path('sql_sync/', views_sql_sync.sql_sync, name='sql_sync'),
     path('sql_sync/execute_sql_sync/', views_sql_sync.execute_sql_sync, name='execute_sql_sync'),
+
     path('test_env_deploy/', views_project_deploy_online.test_env_deploy, name='test_env_deploy'),
+    path('test_env_deploy/test_env_deploy_check_out_version',
+         views_project_deploy_online.test_env_deploy_check_out_version, name='test_env_deploy_check_out_version'),
     path('test_env_deploy/test_env_deploy_execute/', views_project_deploy_online.test_env_deploy_execute,
          name='test_env_deploy_execute'),
+
     path('produce_env_online/', views_project_deploy_online.produce_env_online, name='produce_env_online'),
-    path('demo/', views.demo, name='demo'),
+    path('echo_once/', views_project_deploy_online.echo_once, name="echo_once")
+
 
 ]

@@ -2,3 +2,26 @@
 {% load staticfiles %}
 {% block title %}生产环境上线{% endblock %}
 {% block content_header %}生产环境上线{% endblock %}
+
+
+
+
+
+
+<!-- js动态加载块 -->
+{% block js %}
+    <!-- Select2 -->
+    <script src="{% static 'admin_lte/plugins/select2/js/select2.full.min.js' %}"></script>
+
+    <script>
+        $(function () {
+            //Initialize Select2 Elements
+            $('.select2').select2();
+        });
+    </script>
+
+    <script type="text/javascript">
+        const element = document.getElementById("id_produce_env_online");
+        element.classList.add("active")
+    </script>
+{% endblock %}

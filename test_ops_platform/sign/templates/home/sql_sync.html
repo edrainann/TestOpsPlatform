@@ -2,22 +2,6 @@
 {% load staticfiles %}
 {% block title %}SQL同步{% endblock %}
 
-<!-- js动态加载块 -->
-{% block js_header %}
-    {#<script>#}
-    {#    function test() {#}
-    {#alert("我是行间事件");#}
-    {#${this}.addClass("active");#}
-    {#        var element = document.getElementById("id_sql_sync");#}
-    {#var element = document.getElementsByClassName(".nav-link");#}
-    {#        element.classList.add("active");#}
-    {#    }#}
-    {#</script>#}
-
-
-
-
-{% endblock %}
 
 <!-- Content Wrapper. Contains page content -->
 <!-- 内部封装 -->
@@ -39,46 +23,79 @@
         <div class="container-fluid">
 
             <div class="row">
-                <!-- 左边列 -->
-                <div class="col-md-6">
-                    <form role="form" action="{% url 'sign:execute_sql_sync' %}" method="post"
-                          id="id_form_execute_sql_sync">
-                        {% csrf_token %}
-                        <!-- 选择环境 -->
-                        <!-- select -->
-                        <div class="form-group" style="width:200px">
-                            <label>选择环境：</label>
-                            <select class="form-control" name="choose_env" id="id_choose_env">
-                                {% for item in sql_sync_env_list %}
-                                    <option>{{ item.sql_sync_env }}</option>
-                                {% endfor %}
-                            </select>
-                        </div><!-- /.选择环境 -->
 
-                        <!-- 输入需要执行的SQL -->
-                        <!-- textarea -->
-                        <div class="form-group">
-                            <label>请输入需要执行的SQL：</label>
-                            <textarea name="execute_sql" class="form-control" rows="8"
-                                      placeholder="Enter ..." id="id_execute_sql"></textarea>
-                        </div><!-- /.输入需要执行的SQL -->
-                        <button type="reset" class="btn btn-default">清空</button>
-                        <button type="submit" class="btn btn-primary float-right" id="id_execute_sql_button">执行
-                        </button>
-                    </form>
+                <!-- 左边列 -->
+                <div class="col-md-5">
+                    <!-- 卡片主体 -->
+                    <div class="card card-default">
+
+                        <!-- 卡片头部 -->
+                        <div class="card-header">
+                            <h3 class="card-title">SQL执行</h3>
+                        </div><!-- /.卡片头部 -->
+
+                        <form role="form" action="{% url 'sign:execute_sql_sync' %}" method="post"
+                              id="id_form_execute_sql_sync">
+                            <!-- 卡片内容 -->
+                            <div class="card-body">
+
+                                {% csrf_token %}
+
+                                <!-- 选择环境 -->
+                                <div class="form-group" style="width:200px">
+                                    <label>选择环境：</label>
+                                    <select class="form-control" name="choose_env" id="id_choose_env">
+                                        {% for item in sql_sync_env_list %}
+                                            <option>{{ item.sql_sync_env }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div><!-- /.选择环境 -->
+
+                                <!-- 输入需要执行的SQL -->
+                                <div class="form-group">
+                                    <label>请输入需要执行的SQL：</label>
+                                    <textarea name="execute_sql" class="form-control" rows="8"
+                                              placeholder="Enter ..." id="id_execute_sql"></textarea>
+                                </div><!-- /.输入需要执行的SQL -->
+
+
+                            </div><!-- /.卡片内容 -->
+
+                            <!-- 卡片底部 -->
+                            <div class="card-footer">
+                                <button type="reset" class="btn btn-default">清空</button>
+                                <button type="submit" class="btn btn-primary float-right"
+                                        id="id_execute_sql_button">
+                                    执行
+                                </button>
+                            </div><!-- /.卡片底部 -->
+                        </form>
+
+                    </div><!-- /.卡片主体 -->
+
                 </div><!--/.左边列 -->
 
                 <!-- 右边列 -->
-                <div class="col-md-6">
-                    <!-- 执行结果 -->
-                    <!-- textarea -->
-                    <div class="form-group">
-                        <label>执行结果：</label>
-                        <textarea id="id_execute_sql_result_message" name="execute_sql_result_message"
-                                  class="form-control" rows="11"
-                                  placeholder="显示执行结果" disabled></textarea>
-                    </div><!-- /.执行结果 -->
+                <div class="col-md-7">
+                    <!-- 卡片主体 -->
+                    <div class="card card-secondary">
+
+                        <!-- 卡片头部 -->
+                        <div class="card-header">
+                            <h3 class="card-title">执行结果</h3>
+                        </div><!-- /.卡片头部 -->
+
+                            <!-- 执行结果 -->
+                            <div class="form-group">
+                                <textarea id="id_execute_sql_result_message" name="execute_sql_result_message"
+                                          class="form-control" rows="17"
+                                          placeholder="显示执行结果" disabled></textarea>
+                            </div><!-- /.执行结果 -->
+
+                    </div><!-- /.卡片主体 -->
+
                 </div><!-- /.右边列 -->
+
             </div><!-- /.row -->
 
         </div><!-- /.container-fluid -->
@@ -114,7 +131,7 @@
     </script>
 
     <script type="text/javascript">
-        var element = document.getElementById("id_sidebar_sql_sync");
+        const element = document.getElementById("id_sidebar_sql_sync");
         element.classList.add("active")
     </script>
 

@@ -9,14 +9,6 @@ from sign.forms import UserForm
 from sign.models import UserModel
 
 
-def demo(request):
-    return render(request, 'home/demo.html')
-
-
-def index(request):
-    return render(request, 'sign/index.html')
-
-
 # @login_required  # 限制访问
 def base_home(request):
     return render(request, 'home/base_home.html')

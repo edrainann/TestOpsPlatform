@@ -6,7 +6,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from sign.sql_sync.execute_sql import exe_sql
+from execute_sql import exe_sql
 from sign.models import SqlSync
 
 
@@ -21,6 +21,5 @@ def execute_sql_sync(request):
     if request.method == "POST":
         choose_env = request.POST.get("choose_env", "")
         execute_sql = request.POST.get("execute_sql", "")
-        print(choose_env, execute_sql)
         execute_sql_result_message = exe_sql(choose_env, execute_sql)
         return HttpResponse(execute_sql_result_message)

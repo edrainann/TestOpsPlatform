@@ -32,7 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',  # 认证授权系统
     'django.contrib.contenttypes',  # 内容类型框架
-    'django.contrib.sessions',  # 会话框架
+    'django.contrib.sessions',  # 会话框架，将Session存储在数据库中django_session
     'django.contrib.messages',  # 消息框架
     'django.contrib.staticfiles',  # 管理静态文件的框架
     # 你项目的 TEMPLATES 配置项描述了 Django 如何载入和渲染模板。
@@ -127,3 +127,7 @@ STATICFILES_DIRS = [
 CAPTCHA_IMAGE_SIZE = (100, 50)  # 设置 captcha 图片大小
 CAPTCHA_LENGTH = 4  # 字符个数
 CAPTCHA_TIMEOUT = 1  # 超时(minutes)
+
+# session失效设置
+SESSION_SAVE_EVERY_REQUEST = True  # 需要设置，下面配置才会生效
+SESSION_COOKIE_AGE = 60 * 100  # 60分钟

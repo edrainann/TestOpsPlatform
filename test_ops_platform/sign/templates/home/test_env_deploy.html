@@ -28,77 +28,81 @@
                         </div><!-- /.卡片头部 -->
 
                         <!-- 卡片内容 -->
-                        <form role="form" action="{% url 'sign:test_env_deploy_execute' %}" method="post"
-                              id="id_form_test_env_deploy">
-                            <div class="card-body">
-                                {% csrf_token %}
+                        <div class="card-body">
+                            {% csrf_token %}
 
-                                <!-- 选择环境 -->
-                                <div class="form-group row">
-                                    <label class="col-sm-5 col-form-label">选择环境：</label>
-                                    <div class="col-sm-7">
-                                        <select class="form-control" name="env_name" id="id_env_name">
-                                            {% for item in env_name_list %}
-                                                <option>{{ item.env_name }}</option>
-                                            {% endfor %}
-                                        </select>
+                            <!-- 选择环境 -->
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">选择环境：</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="env_name" id="id_env_name">
+                                        {% for item in env_name_list %}
+                                            <option>{{ item.env_name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div><!-- /.选择环境 -->
+
+                            <!-- 项目名称 -->
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">项目名称：</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control select2" name="project_name"
+                                            id="id_project_name" style="width: 100%;">
+                                        <option disabled="disabled">请选择项目名称</option>
+                                        {% for item in project_name_list %}
+                                            <option>{{ item.project_name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div><!-- /.项目名称 -->
+
+                            <!-- 当前版本号 -->
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label" for="id_current_version_number">当前版本：</label>
+                                <div class="col-sm-8">
+                                    <div class="input-group">
+                                        <input class="form-control " id="id_current_version_number"
+                                               name="current_version_number" placeholder="显示当前版本号..." disabled/>
+                                        <div class="input-group-prepend">
+                                            <button type="button" class="btn btn-info float-right"
+                                                    id="id_test_env_deploy_check_out_version_button">查看
+                                            </button>
+                                        </div>
                                     </div>
-                                </div><!-- /.选择环境 -->
+                                </div>
+                            </div><!-- /.当前版本号 -->
 
-                                <!-- 项目名称 -->
-                                <div class="form-group row">
-                                    <label class="col-sm-5 col-form-label">项目名称：</label>
-                                    <div class="col-sm-7">
-                                        <select class="form-control select2" name="project_name"
-                                                id="id_project_name" style="width: 100%;">
-                                            <option disabled="disabled">请选择项目名称</option>
-                                            {% for item in project_name_list %}
-                                                <option>{{ item.project_name }}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                </div><!-- /.项目名称 -->
 
-                                <!-- 当前版本号 -->
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control " id="current_version_number"
-                                               name="current_version_number" placeholder="显示当前版本号..." disabled>
-                                    <div class="input-group-prepend">
-                                        <button type="submit" class="btn btn-info btn-flat">查看</button>
-                                    </div>
-                                </div><!-- /.当前版本号 -->
+                            <!-- 版本号 -->
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label" for="id_version_number">版本号：</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="id_version_number"
+                                           name="version_number" placeholder="不填则默认为当前版本update..."/>
+                                </div>
+                            </div><!-- /.版本号 -->
 
-                                <!-- 版本号 -->
-                                <div class="form-group row">
-                                    <label class="col-sm-5 col-form-label" for="id_version_number">版本号：</label>
-                                    <div class="col-sm-7">
-                                        <input type="text" class="form-control " id="id_version_number"
-                                               name="version_number" placeholder="请输入具体版本号...">
-                                    </div>
-                                </div><!-- /.版本号 -->
+                            <!-- 执行操作 -->
+                            <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">执行操作：</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="deploy_execute_action"
+                                            id="id_deploy_execute_action">
+                                        {% for item in deploy_execute_action_list %}
+                                            <option>{{ item.execute_action }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div><!-- /.执行操作 -->
 
-                                <!-- 执行操作 -->
-                                <div class="form-group row">
-                                    <label class="col-sm-5 col-form-label">执行操作：</label>
-                                    <div class="col-sm-7">
-                                        <select class="form-control" name="deploy_execute_action"
-                                                id="id_deploy_execute_action_list">
-                                            {% for item in deploy_execute_action_list %}
-                                                <option>{{ item.execute_action }}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>
-                                </div><!-- /.执行操作 -->
+                        </div><!-- /.卡片内容 -->
 
-                            </div>
-
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-primary float-right"
-                                        id="id_execute_sql_button">执行
-                                </button>
-                            </div>
-
-                        </form><!-- /.卡片内容 -->
+                        <div class="card-footer">
+                            <button type="button" class="btn btn-primary float-right"
+                                    id="id_test_env_deploy_execute_button">执行
+                            </button>
+                        </div>
 
 
                     </div><!-- /.卡片主体 -->
@@ -119,12 +123,12 @@
                         <div class="form-group">
                             <textarea id="id_test_env_deploy_execute_message"
                                       name="test_env_deploy_execute_message"
-                                      class="form-control" rows="11"
-                                      placeholder="显示执行结果......" disabled></textarea>
+                                      class="form-control " rows="14"
+                                      placeholder="显示执行结果......"
+                                      disabled></textarea>
                         </div><!-- /.显示执行结果 -->
 
                     </div><!-- /.卡片主体 -->
-
 
                 </div><!-- /.右边列 -->
 
@@ -143,11 +147,94 @@
 {% block js %}
     <!-- Select2 -->
     <script src="{% static 'admin_lte/plugins/select2/js/select2.full.min.js' %}"></script>
-
     <script>
         $(function () {
-            //Initialize Select2 Elements
+            //Initialize Select2 Elements,下拉框内可以输入文字
             $('.select2').select2();
         });
     </script>
+
+    <!-- 侧边栏变亮 -->
+    <script type="text/javascript"> //默认的type就是JavaScript，所以不必显式地把type指定为JavaScript
+    const element = document.getElementById("id_test_env_deploy");
+    element.classList.add("active")
+    </script><!-- /.侧边栏变亮 -->
+
+    <!-- 当前版本查看 -->
+    <script>
+        $(function () {
+            $('#id_test_env_deploy_check_out_version_button').click(function () {
+                /*创建socket连接*/
+                const socket = new WebSocket("ws://" + window.location.host + "/test_env_deploy/test_env_deploy_check_out_version");
+                console.log("this is:" + socket);
+                socket.onopen = function () {
+                    console.log('WebSocket open');//成功连接上Websocket
+                    const id_env_name = $('#id_env_name').val();
+                    const id_project_name = $('#id_project_name').val();
+                    const mess = id_env_name + '###' + id_project_name;
+                    socket.send(mess);
+                };
+                socket.onmessage = function (e) {
+                    // 正则匹配出符合的文字
+                    let ini_data = e.data.toString();
+                    const reg = RegExp(/\[32m/);
+                    if (reg.exec(ini_data)) {
+                        const execute_message1 = e.data.replace('[m', ' ');
+                        const execute_message = execute_message1.replace('[32m', ' ');
+                        {#$('#id_current_version_number').val(execute_message);#}  //赋值给input，这种写法有时会失效,特别是他的父元素是dosplay:none时
+                        $('#id_current_version_number').attr("value", execute_message);
+                        console.log("lalala", execute_message);
+                    }
+                    let execute_message1 = e.data.replace('[m', ' ');
+                    let execute_message2 = execute_message1.replace('[31m', ' ');
+                    let execute_message = execute_message2.replace('[32m', ' ');
+                    console.log('message: ' + execute_message);//打印服务端返回的数据`
+                    {#console.log('message: ' + e.data);//打印服务端返回的数据#}
+                    {#$('#id_test_env_deploy_execute_message').append(e.data + '<br/>');#}
+                    {#$('#id_current_version_number').append(execute_message + '\n');#}
+                    $('#id_test_env_deploy_execute_message').append(execute_message + '\n');
+                    let textarea = document.getElementById('id_test_env_deploy_execute_message');
+                    textarea.scrollTop = textarea.scrollHeight;
+                };
+                socket.onclose = function (e) {
+                    socket.close();
+                    console.log('websocket已关闭');
+                    console.log(e);
+                };
+
+            });
+        });
+    </script><!-- /.当前版本查看 -->
+
+    <!-- update/new查看 -->
+    <script>
+        $(function () {
+            $('#id_test_env_deploy_execute_button').click(function () {
+                /*创建socket连接*/
+                const socket = new WebSocket("ws://" + window.location.host + "/test_env_deploy/test_env_deploy_execute/");
+                console.log("this is:" + socket);
+                socket.onopen = function () {
+                    console.log('WebSocket open');//成功连接上Websocket
+                    const id_env_name = $('#id_env_name').val();
+                    const id_project_name = $('#id_project_name').val();
+                    const id_version_number = $('#id_version_number').val();
+                    const id_deploy_execute_action = $('#id_deploy_execute_action').val();
+                    const mess = id_env_name + '###' + id_project_name + '###' + id_version_number + '###' + id_deploy_execute_action;
+                    socket.send(mess);
+                };
+                socket.onmessage = function (e) {
+                    let execute_message1 = e.data.replace('[m', ' ');
+                    let execute_message2 = execute_message1.replace('[31m', ' ');
+                    let execute_message = execute_message2.replace('[32m', ' ');
+                    console.log('message: ' + execute_message);//打印服务端返回的数据
+                    $('#id_test_env_deploy_execute_message').append(execute_message + '\n');
+                    {#$('#id_test_env_deploy_execute_message').append(e.data + '<br/>');#}
+                    const textarea = document.getElementById('id_test_env_deploy_execute_message');
+                    textarea.scrollTop = textarea.scrollHeight;
+                };
+            });
+        });
+    </script><!-- /.update/new查看 -->
+
+
 {% endblock %}
